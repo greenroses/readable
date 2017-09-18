@@ -1,0 +1,48 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+.vote {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.image-container {
+  width: 60px;
+  float: left;
+}
+
+.btn-toolbar {
+  text-align: center;
+}
+
+.upvote {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+
+.downvote {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+
+.category {
+  border: 2px solid green;
+  padding: 5px;
+}
+
+.post {
+  border: 1px dotted blue;
+  padding: 10px;
+  margin: 5px;
+}
+
+.comment {
+  border: 1px dotted blue;
+  padding: 10px;
+  margin: 5px;
+}

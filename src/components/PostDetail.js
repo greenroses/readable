@@ -17,27 +17,37 @@ class PostDetail extends Component {
       'Content-Type': 'application/json'
     }})
     .then((resp) => {
+      resp.json().then((data) => {
         var obj = {
           id: commentId,
+          parentId: data.parentId
         }
         this.props.deleteComment(obj);   //reducer
+      })
     })
   }
 
   editCommentFunction = (comment_to_edit) => {
     this.props.setCurrentComment({comment: comment_to_edit});
     this.props.history.push(`/${this.props.currentComment.id}/editcomment`);
+    console.log("edit !!!!!!!!!!!!!!!")
+  }
+
+  getCommentsforAPost = (postId) => {
+    const comments = this.props.comments[postId] || {}
+    const commentsArray = Object.keys(comments).map(c => comments[c])
+    console.log('COMMENTS!', comments)
+
+    return (commentsArray).filter(
+      (comment)=>{
+        console.log({ comment })
+        return (comment.parentId===postId)&&(comment.deleted===false)
+      });
   }
 
   render() {
     const { currentPost, currentComment, comments, posts} = this.props;
-    console.log("this is comments");
-    console.log(comments);
-    console.log("this is currentPost");
-    console.log(currentPost);
-    let filteredcomment = comments.filter((comment) => (comment.parentId===currentPost.id));
-    console.log("this is filtered comments");
-    console.log(filteredcomment);
+
     return (
       <div>
         <Link to="/" >Back to homepage</Link>
@@ -46,7 +56,7 @@ class PostDetail extends Component {
         </div>
 
         <div className="comments">
-          {comments.filter((comment)=>(comment.parentId===currentPost.id)&&(comment.deleted===false)).map((comment)=>(
+          {this.getCommentsforAPost(currentPost.id).map((comment)=>(
             <Row>
               <Col md={12} className="comment">
                 <p>{comment.body}</p>
@@ -68,15 +78,15 @@ class PostDetail extends Component {
 }
 
 function mapStateToProps ({ posts, currentPost, currentComment, comments }) {
+  console.log({ comments, currentPost })
+
   return {
     posts: Object.keys(posts).map((id) => ( // turn posts from object to array
       posts[id]
     )),
     currentPost: currentPost,
     currentComment: currentComment,
-    comments: Object.keys(comments).map((id) => (
-      comments[id]
-    )),
+    comments,
   }
 }
 

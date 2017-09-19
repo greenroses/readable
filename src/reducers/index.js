@@ -44,16 +44,20 @@ const initialPostsState = {
 }
 
 const initialCommentState = {
-  "894tuq4ut84ut8v4t8wun89g": {
-    id: '894tuq4ut84ut8v4t8wun89g',
-    parentId: "8xf0y6ziyjabvozdd253nd",
-    timestamp: 1468166872634,
-    body: 'Hi there! I am a COMMENT.',
-    author: 'thingtwo',
-    voteScore: 6,
-    deleted: false,
-    parentDeleted: false
-  },
+  "8xf0y6ziyjabvozdd253nd":{
+    "894tuq4ut84ut8v4t8wun89g": {
+      id: '894tuq4ut84ut8v4t8wun89g',
+      parentId: "8xf0y6ziyjabvozdd253nd",
+      timestamp: 1468166872634,
+      body: 'Hi there! I am a COMMENT.',
+      author: 'thingtwo',
+      voteScore: 6,
+      deleted: false,
+      parentDeleted: false
+    },
+  }
+
+
 }
 
 
@@ -140,47 +144,77 @@ function currentComment (state = {}, action) {
   }
 }
 
+
+
 function comments (state = initialCommentState, action) {
 
   switch (action.type) {
     case LOAD_COMMENTS :
       var comments = {};
+      if (!action.comments.length) return state
       for (let i in action.comments) {
         comments[action.comments[i].id] = action.comments[i]
       }
-      return comments
+      return {
+        ...state,
+        [action.comments[0].parentId]: comments,
+      }
     case ADD_COMMENT :
       var newcommentmessage = Object.assign({}, action);
       delete newcommentmessage.type;
 
       return {
         ...state,
-        [action.id]: newcommentmessage,
+        [action.parentId]: {
+          ...state[action.parentId],
+          [action.id]: newcommentmessage,
+        }
       }
     case DELETE_COMMENT :
       return {
         ...state,
-        [action.id]: {
-          ...state[action.id],
-          deleted: true,
+        [action.parentId]: {
+          ...state[action.parentId],
+          [action.id]: {
+            ...state[action.id],
+            deleted: true,
+          }
+        }
+      }
+    case EDIT_COMMENT :
+      return {
+        ...state,
+        [action.parentId]: {
+          ...state[action.parentId],
+          [action.id]: {
+            ...state[action.id],
+            body: action.body,
+            timestamp: action.timestamp
+          }
         }
       }
     case UPVOTE_COMMENT :
-      return {
-        ...state,
+    return {
+      ...state,
+      [action.parentId]: {
+        ...state[action.parentId],
         [action.id]: {
           ...state[action.id],
           voteScore: action.voteScore
         }
       }
+    }
     case DOWNVOTE_COMMENT :
-      return {
-        ...state,
+    return {
+      ...state,
+      [action.parentId]: {
+        ...state[action.parentId],
         [action.id]: {
           ...state[action.id],
           voteScore: action.voteScore
         }
       }
+    }
     default:
       return state
   }

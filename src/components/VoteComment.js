@@ -8,7 +8,7 @@ import downvote from '../images/downvote.png'; // Tell Webpack this JS file uses
 
 
 class VoteComment extends Component {
-  upvoteCommentFuncton = (commentId, commentVotescore) => {
+  upvoteCommentFuncton = (commentId) => {
     fetch(`http://localhost:3001/comments/${commentId}`, { method: "POST", body: JSON.stringify({option: "upVote"}), headers: {
       'Accept': 'application/json',
       'Authorization': 'whatever-you-want',
@@ -18,15 +18,21 @@ class VoteComment extends Component {
       resp.json().then((data) => {
         var obj = {
           id: commentId,
+          parentId: data.parentId,
           voteScore: data.voteScore
         }
         this.props.upvoteComment(obj);   //reducer
         this.props.setCurrentComment({comment: data});
+        console.log("upvote ran")
+        console.log("current votescore is")
+        console.log(data.voteScore)
+        console.log("currentComment")
+        console.log(this.props.currentComment)
       })
     })
   }
 
-  downvoteCommentFuncton = (commentId, commentVotescore) => {
+  downvoteCommentFuncton = (commentId) => {
     fetch(`http://localhost:3001/comments/${commentId}`, { method: "POST", body: JSON.stringify({option: "downVote"}), headers: {
       'Accept': 'application/json',
       'Authorization': 'whatever-you-want',
@@ -36,6 +42,7 @@ class VoteComment extends Component {
       resp.json().then((data) => {
         var obj = {
           id: commentId,
+          parentId: data.parentId,
           voteScore: data.voteScore
         }
         this.props.downvoteComment(obj);   //reducer
@@ -49,10 +56,10 @@ class VoteComment extends Component {
     return (
       <div className="vote">
         <div>
-          <img className="upvote" src={upvote} alt="Upvote" onClick={()=>{this.upvoteCommentFuncton(this.props.scorecomment.id, this.props.scorecomment.voteScore)}} />
+          <img className="upvote" src={upvote} alt="Upvote" onClick={()=>{this.upvoteCommentFuncton(this.props.scorecomment.id)}} />
         </div>
         <div>
-          <img className="downvote" src={downvote} alt="Downvote" onClick={()=>{this.downvoteCommentFuncton(this.props.scorecomment.id, this.props.scorecomment.voteScore)}} />
+          <img className="downvote" src={downvote} alt="Downvote" onClick={()=>{this.downvoteCommentFuncton(this.props.scorecomment.id)}} />
         </div>
       </div>
     )
@@ -60,15 +67,15 @@ class VoteComment extends Component {
 }
 
 function mapStateToProps ({ posts, currentPost, currentComment, comments }) {
+  console.log({ comments, currentPost })
+
   return {
     posts: Object.keys(posts).map((id) => ( // turn posts from object to array
       posts[id]
     )),
     currentPost: currentPost,
     currentComment: currentComment,
-    comments: Object.keys(comments).map((id) => (
-      comments[id]
-    )),
+    comments,
   }
 }
 

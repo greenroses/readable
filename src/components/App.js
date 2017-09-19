@@ -70,21 +70,6 @@ class App extends Component {
         this.props.loadPosts(obj);
       })
     })
-
-
-    this.props.posts.forEach((post) => {
-      fetch(`http://localhost:3001/posts/${post.id}/comments`, { headers: {'Authorization': 'whatever-you-want'}})
-      .then((resp) => {
-        resp.json().then((data) => {
-          var obj = {
-            type: 'LOAD_COMMENTS',
-            comments: data
-          }
-          this.props.loadComments(obj);
-        })
-      })
-    })
-
   }
 
   addNewpostFunction = (obj) => {

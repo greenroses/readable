@@ -39,10 +39,24 @@ class ListPosts extends Component {
     })
   }
 
+  getNumofComments = (postId) => {
+      const comments = this.props.comments[postId] || {}
+      const commentsArray = Object.keys(comments).map(c => comments[c])
+      console.log('COMMENTS!', comments)
 
+      return (commentsArray).filter(
+        (comment)=>{
+          console.log({ comment })
+          return (comment.parentId===postId)&&(comment.deleted===false)
+        }).length;
+    }
+
+
+/*
   getNumofComments = (postId) => {
     return this.props.comments.filter((comment)=>(comment.parentId===postId)&&(comment.deleted===false)).length;
   }
+*/
 
   editPostFunction = (post_to_edit) => {
     this.props.setCurrentPost({post: post_to_edit});
@@ -87,15 +101,15 @@ class ListPosts extends Component {
 }
 
 function mapStateToProps ({ posts, currentPost, currentComment, comments }) {
+  console.log({ comments, currentPost })
+
   return {
     posts: Object.keys(posts).map((id) => ( // turn posts from object to array
       posts[id]
     )),
     currentPost: currentPost,
     currentComment: currentComment,
-    comments: Object.keys(comments).map((id) => (
-      comments[id]
-    )),
+    comments,
   }
 }
 

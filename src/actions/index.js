@@ -86,32 +86,39 @@ export function addComment ({ id, parentId, timestamp, body, author, voteScore, 
   }
 }
 
-export function editComment ({}) {
+export function editComment ({ id, parentId, body, timestamp }) {
   return {
     type: EDIT_COMMENT,
+    id,
+    parentId,
+    body,
+    timestamp,
   }
 }
 
-export function deleteComment ({ id }) {
+export function deleteComment ({ id, parentId }) {
   return {
     type: DELETE_COMMENT,
-    id
+    id,
+    parentId,
   }
 }
 
-export function upvotePost ({ id, voteScore}) {
+export function upvotePost ({ id, voteScore, parentId }) {
   return {
     type: UPVOTE_POST,
     id,
-    voteScore
+    voteScore,
+    parentId
   }
 }
 
-export function downvotePost ({ id, voteScore}) {
+export function downvotePost ({ id, voteScore, parentId }) {
   return {
     type: DOWNVOTE_POST,
     id,
-    voteScore
+    voteScore,
+    parentId
   }
 }
 

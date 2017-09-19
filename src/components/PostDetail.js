@@ -60,7 +60,7 @@ class PostDetail extends Component {
             <Row>
               <Col md={12} className="comment">
                 <p>{comment.body}</p>
-                <p>author: {comment.author}, timestamp: {comment.timestamp}</p>
+                <p>author: {comment.author}, timestamp: {new Date(comment.timestamp).toString().substr(0,16)}</p>
                 <VoteComment scorecomment={comment}/>
                 <p>voteScore: {comment.voteScore}</p>
                 <div class="btn-toolbar">

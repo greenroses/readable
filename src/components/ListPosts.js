@@ -84,7 +84,7 @@ class ListPosts extends Component {
           <Col md={12} className="post">
             <h3 onClick={() => {this.openPostDetail(post)}}>{post.title}</h3>
             <p>{post.body}</p>
-            <p>author: {post.author}, timestamp: {post.timestamp}</p>
+            <p>author: {post.author}, timestamp: {new Date(post.timestamp).toString().substr(0,16)}</p>
             <p>comments: {numofComments}</p>
             <Vote scorepost={post}/>
             <p>voteScore: {post.voteScore}</p>

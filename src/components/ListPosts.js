@@ -33,8 +33,6 @@ class ListPosts extends Component {
           comments: data
         }
         this.props.loadComments(obj);
-        console.log("this is data.length")
-        console.log(data.length);
       })
     })
   }
@@ -42,11 +40,9 @@ class ListPosts extends Component {
   getNumofComments = (postId) => {
       const comments = this.props.comments[postId] || {}
       const commentsArray = Object.keys(comments).map(c => comments[c])
-      console.log('COMMENTS!', comments)
 
       return (commentsArray).filter(
         (comment)=>{
-          console.log({ comment })
           return (comment.parentId===postId)&&(comment.deleted===false)
         }).length;
     }
@@ -101,8 +97,6 @@ class ListPosts extends Component {
 }
 
 function mapStateToProps ({ posts, currentPost, currentComment, comments }) {
-  console.log({ comments, currentPost })
-
   return {
     posts: Object.keys(posts).map((id) => ( // turn posts from object to array
       posts[id]

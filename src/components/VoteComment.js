@@ -22,12 +22,12 @@ class VoteComment extends Component {
           voteScore: data.voteScore
         }
         this.props.upvoteComment(obj);   //reducer
-        this.props.setCurrentComment({comment: data});
+        //this.props.setCurrentComment({comment: data});
         console.log("upvote ran")
         console.log("current votescore is")
         console.log(data.voteScore)
-        console.log("currentComment")
-        console.log(this.props.currentComment)
+        console.log("this is comments state after upvote")
+        console.log(this.props.comments)
       })
     })
   }
@@ -67,8 +67,6 @@ class VoteComment extends Component {
 }
 
 function mapStateToProps ({ posts, currentPost, currentComment, comments }) {
-  console.log({ comments, currentPost })
-
   return {
     posts: Object.keys(posts).map((id) => ( // turn posts from object to array
       posts[id]

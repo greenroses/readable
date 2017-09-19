@@ -8,7 +8,7 @@ import downvote from '../images/downvote.png'; // Tell Webpack this JS file uses
 
 
 class Vote extends Component {
-  upvotePostFuncton = (postId, postVotescore) => {
+  upvotePostFuncton = (postId) => {
     fetch(`http://localhost:3001/posts/${postId}`, { method: "POST", body: JSON.stringify({option: "upVote"}), headers: {
       'Accept': 'application/json',
       'Authorization': 'whatever-you-want',
@@ -26,7 +26,7 @@ class Vote extends Component {
     })
   }
 
-  downvotePostFuncton = (postId, postVotescore) => {
+  downvotePostFuncton = (postId) => {
     fetch(`http://localhost:3001/posts/${postId}`, { method: "POST", body: JSON.stringify({option: "downVote"}), headers: {
       'Accept': 'application/json',
       'Authorization': 'whatever-you-want',

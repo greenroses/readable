@@ -81,8 +81,6 @@ class App extends Component {
     .then((resp) => {
       resp.json().then((data) => {
         this.props.addPost(data);   //reducer
-        console.log("addNewpost RAN")
-        console.log(data)
       })
     })
   }
@@ -96,8 +94,6 @@ class App extends Component {
     .then((resp) => {
       resp.json().then((data) => {
         this.props.addComment(data);
-        console.log("addNewcomment RAN")
-        console.log(data)
       })
     })
   }
@@ -133,9 +129,10 @@ class App extends Component {
           id: data.id,
           timestamp: data.timestamp,
           body: data.body,
+          parentId: data.parentId
         }
         this.props.editComment(y);   //reducer
-        this.props.setCurrentComment({comment: data});
+        this.props.setCurrentComment({comment: data});   //This works
       })
     })
   }
@@ -223,9 +220,7 @@ function mapStateToProps ({ posts, currentPost, currentComment, comments }) {
     )),
     currentPost: currentPost,
     currentComment: currentComment,
-    comments: Object.keys(comments).map((id) => (
-      comments[id]
-    )),
+    comments,
   }
 }
 

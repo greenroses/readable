@@ -104,37 +104,37 @@ export function deleteComment ({ id, parentId }) {
   }
 }
 
-export function upvotePost ({ id, voteScore, parentId }) {
+export function upvotePost ({ id, voteScore }) {
   return {
     type: UPVOTE_POST,
     id,
     voteScore,
-    parentId
   }
 }
 
-export function downvotePost ({ id, voteScore, parentId }) {
+export function downvotePost ({ id, voteScore }) {
   return {
     type: DOWNVOTE_POST,
     id,
     voteScore,
-    parentId
   }
 }
 
-export function upvoteComment ({ id, voteScore }) {
+export function upvoteComment ({ id, voteScore, parentId }) {
   return {
     type: UPVOTE_COMMENT,
     id,
-    voteScore
+    voteScore,
+    parentId,
   }
 }
 
-export function downvoteComment ({ id, voteScore }) {
+export function downvoteComment ({ id, voteScore, parentId }) {
   return {
     type: DOWNVOTE_COMMENT,
     id,
-    voteScore
+    voteScore,
+    parentId,
   }
 }
 

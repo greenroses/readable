@@ -176,7 +176,7 @@ function comments (state = initialCommentState, action) {
         [action.parentId]: {
           ...state[action.parentId],
           [action.id]: {
-            ...state[action.id],
+            ...state[action.parentId][action.id],
             deleted: true,
           }
         }
@@ -187,34 +187,34 @@ function comments (state = initialCommentState, action) {
         [action.parentId]: {
           ...state[action.parentId],
           [action.id]: {
-            ...state[action.id],
+            ...state[action.parentId][action.id],
             body: action.body,
             timestamp: action.timestamp
           }
         }
       }
     case UPVOTE_COMMENT :
-    return {
-      ...state,
-      [action.parentId]: {
-        ...state[action.parentId],
-        [action.id]: {
-          ...state[action.id],
-          voteScore: action.voteScore
+      return {
+        ...state,
+        [action.parentId]: {
+          ...state[action.parentId],
+          [action.id]: {
+            ...state[action.parentId][action.id],
+            voteScore: action.voteScore
+          }
         }
       }
-    }
     case DOWNVOTE_COMMENT :
-    return {
-      ...state,
-      [action.parentId]: {
-        ...state[action.parentId],
-        [action.id]: {
-          ...state[action.id],
-          voteScore: action.voteScore
+      return {
+        ...state,
+        [action.parentId]: {
+          ...state[action.parentId],
+          [action.id]: {
+            ...state[action.parentId][action.id],
+            voteScore: action.voteScore
+          }
         }
       }
-    }
     default:
       return state
   }

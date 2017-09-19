@@ -23,24 +23,32 @@ class PostDetail extends Component {
           parentId: data.parentId
         }
         this.props.deleteComment(obj);   //reducer
+        console.log("this is comments state after delete")
+        console.log(this.props.comments)
       })
     })
   }
 
   editCommentFunction = (comment_to_edit) => {
-    this.props.setCurrentComment({comment: comment_to_edit});
-    this.props.history.push(`/${this.props.currentComment.id}/editcomment`);
-    console.log("edit !!!!!!!!!!!!!!!")
+    console.log("edit starts !!!!!!!!!!!!!!!");
+    console.log("this is comment_to_edit");
+    console.log(comment_to_edit);
+    console.log("this is currentComment before change");
+    console.log(this.props.currentComment);
+    this.props.setCurrentComment({comment: comment_to_edit}); /////////this is not working and somehow working to propegate the posteditform
+    console.log("this is currentComment after set");
+    console.log(this.props.currentComment);
+
+    this.props.history.push(`/${comment_to_edit.id}/editcomment`);
+
   }
 
   getCommentsforAPost = (postId) => {
     const comments = this.props.comments[postId] || {}
     const commentsArray = Object.keys(comments).map(c => comments[c])
-    console.log('COMMENTS!', comments)
 
     return (commentsArray).filter(
       (comment)=>{
-        console.log({ comment })
         return (comment.parentId===postId)&&(comment.deleted===false)
       });
   }
@@ -78,14 +86,12 @@ class PostDetail extends Component {
 }
 
 function mapStateToProps ({ posts, currentPost, currentComment, comments }) {
-  console.log({ comments, currentPost })
-
   return {
     posts: Object.keys(posts).map((id) => ( // turn posts from object to array
       posts[id]
     )),
-    currentPost: currentPost,
-    currentComment: currentComment,
+    currentPost,
+    currentComment,
     comments,
   }
 }

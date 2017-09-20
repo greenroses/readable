@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { loadPosts, loadComments, addPost, editPost, editComment, setCurrentPost, setCurrentComment, deletePost, addComment, deleteComment } from '../actions'
+import { loadPosts, loadComments, addPost, editPost, editComment, setCurrentPost, setCurrentComment, deletePost, addComment, deleteComment, setSortProperty } from '../actions'
 import { Route, Link, withRouter } from 'react-router-dom'
 import PostForm from './PostForm.js'
 import PostEditForm from './PostEditForm'
@@ -15,6 +15,7 @@ import '../index.css';
 
 
 class App extends Component {
+
 
   submit = (values) => {
     console.log(values);
@@ -141,10 +142,28 @@ class App extends Component {
     return '_' + Math.random().toString(36).substr(2,9)
   }
 
+  dynamicSort = (a, b) => {
+    if (this.props.sortProperty === "voteScore") {
+      if (a.voteScore < b.voteScore)
+        return 1;
+      if (a.voteScore > b.voteScore)
+        return -1;
+      return 0;
+    }
+    if (this.props.sortProperty === "timestamp") {
+      if (a.timestamp < b.timestamp)
+        return 1;
+      if (a.timestamp > b.timestamp)
+        return -1;
+      return 0;
+    }
+  }
+
 
   render() {
     const { posts, comments, currentPost, currentComment, loadPosts, loadComments, addPost, deletePost } = this.props
     const categories = ['react', 'redux', 'udacity']
+
 
     return (
       <div className="App">
@@ -153,6 +172,8 @@ class App extends Component {
             <div className="App-header">
               <h2>Welcome to Readable</h2>
               <p><a href="/newpost">Add new post</a></p>
+              <button onClick={()=>{this.props.setSortProperty({property: "voteScore"})}}>sort by voteScore</button>
+              <button onClick={()=>{this.props.setSortProperty({property: "timestamp"})}}>sort by timestamp</button>
             </div>
             <Grid>
               <Row className="show-grid">
@@ -162,7 +183,7 @@ class App extends Component {
                   </Col>
                 ))}
               </Row>
-              {posts.filter(post => post.deleted===false).map((post) => (
+              {posts.filter(post => post.deleted===false).sort(this.dynamicSort).map((post) => (
                 <ListPosts listpost = {post} />
               ))}
             </Grid>
@@ -178,9 +199,11 @@ class App extends Component {
                   <Col md={12} className="category">
                     <h1>{category}</h1>
                     <p><a href="/newpost">Add new post</a></p>
+                    <button onClick={()=>{this.props.setSortProperty({property: "voteScore"})}}>sort by voteScore</button>
+                    <button onClick={()=>{this.props.setSortProperty({property: "timestamp"})}}>sort by timestamp</button>
                   </Col>
                 </Row>
-                {posts.filter(post => post.category===`${category}`).filter(post => post.deleted===false).map(post => (
+                {posts.filter(post => post.category===`${category}`).filter(post => post.deleted===false).sort(this.dynamicSort).map(post => (
                   <ListPosts listpost= {post}/>
                 ))}
               </Grid>
@@ -213,7 +236,7 @@ class App extends Component {
   }
 }
 
-function mapStateToProps ({ posts, currentPost, currentComment, comments }) {
+function mapStateToProps ({ posts, currentPost, currentComment, comments, sortProperty }) {
   return {
     posts: Object.keys(posts).map((id) => ( // turn posts from object to array
       posts[id]
@@ -221,6 +244,7 @@ function mapStateToProps ({ posts, currentPost, currentComment, comments }) {
     currentPost: currentPost,
     currentComment: currentComment,
     comments,
+    sortProperty,
   }
 }
 
@@ -236,6 +260,7 @@ function mapDispatchToProps (dispatch) {
     deleteComment: (data) => dispatch(deleteComment(data)),
     setCurrentPost: (data) => dispatch(setCurrentPost(data)),
     setCurrentComment: (data) => dispatch(setCurrentComment(data)),
+    setSortProperty: (data) => dispatch(setSortProperty(data)),
   }
 }
 

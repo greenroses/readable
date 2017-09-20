@@ -30,15 +30,7 @@ class PostDetail extends Component {
   }
 
   editCommentFunction = (comment_to_edit) => {
-    console.log("edit starts !!!!!!!!!!!!!!!");
-    console.log("this is comment_to_edit");
-    console.log(comment_to_edit);
-    console.log("this is currentComment before change");
-    console.log(this.props.currentComment);
     this.props.setCurrentComment({comment: comment_to_edit}); /////////this is not working and somehow working to propegate the posteditform
-    console.log("this is currentComment after set");
-    console.log(this.props.currentComment);
-
     this.props.history.push(`/${comment_to_edit.id}/editcomment`);
 
   }
@@ -53,6 +45,14 @@ class PostDetail extends Component {
       });
   }
 
+  compareScore = (a,b) => {
+    if (a.voteScore < b.voteScore)
+      return 1;
+    if (a.voteScore > b.voteScore)
+      return -1;
+    return 0;
+  }
+
   render() {
     const { currentPost, currentComment, comments, posts} = this.props;
 
@@ -64,13 +64,13 @@ class PostDetail extends Component {
         </div>
 
         <div className="comments">
-          {this.getCommentsforAPost(currentPost.id).map((comment)=>(
+          {this.getCommentsforAPost(currentPost.id).sort(this.compareScore).map((comment)=>(
             <Row>
               <Col md={12} className="comment">
                 <p>{comment.body}</p>
                 <p>author: {comment.author}, timestamp: {new Date(comment.timestamp).toString().substr(0,16)}</p>
-                <VoteComment scorecomment={comment}/>
                 <p>voteScore: {comment.voteScore}</p>
+                <VoteComment scorecomment={comment}/>
                 <div class="btn-toolbar">
                   <Button bsStyle="warning" onClick={() => {this.editCommentFunction(comment)}}>edit</Button>
                   <Button bsStyle="warning" onClick={() => {this.deleteCommentFunction(comment.id)}}>delete</Button>

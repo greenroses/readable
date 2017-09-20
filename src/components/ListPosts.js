@@ -82,8 +82,8 @@ class ListPosts extends Component {
             <p>{post.body}</p>
             <p>author: {post.author}, timestamp: {new Date(post.timestamp).toString().substr(0,16)}</p>
             <p>comments: {numofComments}</p>
-            <Vote scorepost={post}/>
             <p>voteScore: {post.voteScore}</p>
+            <Vote scorepost={post}/>
             <div class="btn-toolbar">
               <Button bsStyle="success" onClick={() => {this.createComment(post)}}>add a comment</Button>
               <Button bsStyle="warning" onClick={() => {this.editPostFunction(post)}}>edit</Button>

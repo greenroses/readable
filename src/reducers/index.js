@@ -17,7 +17,8 @@ import {
   UPVOTE_COMMENT,
   DOWNVOTE_COMMENT,
   SET_CURRENT_POST,
-  SET_CURRENT_COMMENT
+  SET_CURRENT_COMMENT,
+  SET_SORT_PROPERTY,
 } from '../actions'
 
 const initialPostsState = {
@@ -144,8 +145,6 @@ function currentComment (state = {}, action) {
   }
 }
 
-
-
 function comments (state = initialCommentState, action) {
 
   switch (action.type) {
@@ -220,10 +219,20 @@ function comments (state = initialCommentState, action) {
   }
 }
 
+function sortProperty (state = "voteScore", action) {
+  switch (action.type) {
+    case SET_SORT_PROPERTY :
+      return action.property
+    default:
+      return state
+  }
+}
+
 export default combineReducers({
   posts,
   comments,
   currentPost,
   currentComment,
+  sortProperty,
   form: formReducer // you have to pass formReducer under 'form' key
 })

@@ -14,6 +14,7 @@ export const UPVOTE_COMMENT = "UPVOTE_COMMENT"
 export const DOWNVOTE_COMMENT = "DOWNVOTE_COMMENT"
 export const SET_CURRENT_POST = "SET_CURRENT_POST"
 export const SET_CURRENT_COMMENT = "SET_CURRENT_COMMENT"
+export const SET_SORT_PROPERTY = "SET_SORT_PROPERTY"
 
 export function loadPosts({ posts }) {
   return {
@@ -149,5 +150,12 @@ export function setCurrentComment ({ comment }) {
   return {
     type: SET_CURRENT_COMMENT,
     comment
+  }
+}
+
+export function setSortProperty ( { property }) {
+  return {
+    type: SET_SORT_PROPERTY,
+    property
   }
 }

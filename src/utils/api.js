@@ -1,4 +1,4 @@
-const api = 'http://localhost:3001'
+const api = process.env.REACT_APP_READABLE_API_URL || 'http://localhost:3001'
 const header = { headers: {'Authorization': 'whatever-you-want'}}
 
 export function getAllposts() {

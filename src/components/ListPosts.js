@@ -10,7 +10,7 @@ import PostEditForm from './PostEditForm'
 
 class ListPosts extends Component {
   deletePostFunction = (postId) => {
-    fetch(`http://localhost:3001/posts/${postId}`, { method: "DELETE", headers: {
+    fetch(`https://xiaodan-readable-backend.herokuapp.com/posts/${postId}`, { method: "DELETE", headers: {
       'Accept': 'application/json',
       'Authorization': 'whatever-you-want',
       'Content-Type': 'application/json'
@@ -25,7 +25,7 @@ class ListPosts extends Component {
 
 
   componentDidMount() {
-    fetch(`http://localhost:3001/posts/${this.props.listpost.id}/comments`, { headers: {'Authorization': 'whatever-you-want'}})
+    fetch(`https://xiaodan-readable-backend.herokuapp.com/posts/${this.props.listpost.id}/comments`, { headers: {'Authorization': 'whatever-you-want'}})
     .then((resp) => {
       resp.json().then((data) => {
         var obj = {

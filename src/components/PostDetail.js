@@ -11,7 +11,7 @@ import ListPosts from './ListPosts'
 
 class PostDetail extends Component {
   deleteCommentFunction = (commentId) => {
-    fetch(`http://localhost:3001/comments/${commentId}`, { method: "DELETE", headers: {
+    fetch(`https://xiaodan-readable-backend.herokuapp.com/comments/${commentId}`, { method: "DELETE", headers: {
       'Accept': 'application/json',
       'Authorization': 'whatever-you-want',
       'Content-Type': 'application/json'

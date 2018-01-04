@@ -9,7 +9,7 @@ import downvote from '../images/downvote.png'; // Tell Webpack this JS file uses
 
 class VoteComment extends Component {
   upvoteCommentFuncton = (commentId) => {
-    fetch(`http://localhost:3001/comments/${commentId}`, { method: "POST", body: JSON.stringify({option: "upVote"}), headers: {
+    fetch(`https://xiaodan-readable-backend.herokuapp.com/comments/${commentId}`, { method: "POST", body: JSON.stringify({option: "upVote"}), headers: {
       'Accept': 'application/json',
       'Authorization': 'whatever-you-want',
       'Content-Type': 'application/json'
@@ -33,7 +33,7 @@ class VoteComment extends Component {
   }
 
   downvoteCommentFuncton = (commentId) => {
-    fetch(`http://localhost:3001/comments/${commentId}`, { method: "POST", body: JSON.stringify({option: "downVote"}), headers: {
+    fetch(`https://xiaodan-readable-backend.herokuapp.com/comments/${commentId}`, { method: "POST", body: JSON.stringify({option: "downVote"}), headers: {
       'Accept': 'application/json',
       'Authorization': 'whatever-you-want',
       'Content-Type': 'application/json'

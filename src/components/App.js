@@ -61,7 +61,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    fetch("http://localhost:3001/posts", { headers: {'Authorization': 'whatever-you-want'}})
+    fetch("https://xiaodan-readable-backend.herokuapp.com/posts", { headers: {'Authorization': 'whatever-you-want'}})
     .then((resp) => {
       resp.json().then((data) => {
         var obj = {
@@ -74,7 +74,7 @@ class App extends Component {
   }
 
   addNewpostFunction = (obj) => {
-    fetch("http://localhost:3001/posts", { method: "POST", body: JSON.stringify(obj), headers: {
+    fetch("https://xiaodan-readable-backend.herokuapp.com/posts", { method: "POST", body: JSON.stringify(obj), headers: {
       'Accept': 'application/json',
       'Authorization': 'whatever-you-want',
       'Content-Type': 'application/json'
@@ -87,7 +87,7 @@ class App extends Component {
   }
 
   addNewCommentFunction = (obj) => {
-    fetch("http://localhost:3001/comments", { method: "POST", body: JSON.stringify(obj), headers: {
+    fetch("https://xiaodan-readable-backend.herokuapp.com/comments", { method: "POST", body: JSON.stringify(obj), headers: {
       'Accept': 'application/json',
       'Authorization': 'whatever-you-want',
       'Content-Type': 'application/json'
@@ -100,7 +100,7 @@ class App extends Component {
   }
 
   editPostFunction = (obj) => {
-    fetch(`http://localhost:3001/posts/${this.props.currentPost.id}`, { method: "PUT", body: JSON.stringify(obj), headers: {
+    fetch(`https://xiaodan-readable-backend.herokuapp.com/posts/${this.props.currentPost.id}`, { method: "PUT", body: JSON.stringify(obj), headers: {
       'Accept': 'application/json',
       'Authorization': 'whatever-you-want',
       'Content-Type': 'application/json'
@@ -119,7 +119,7 @@ class App extends Component {
   }
 
   editCommentFunction = (obj) => {
-    fetch(`http://localhost:3001/comments/${this.props.currentComment.id}`, { method: "PUT", body: JSON.stringify(obj), headers: {
+    fetch(`https://xiaodan-readable-backend.herokuapp.com/comments/${this.props.currentComment.id}`, { method: "PUT", body: JSON.stringify(obj), headers: {
       'Accept': 'application/json',
       'Authorization': 'whatever-you-want',
       'Content-Type': 'application/json'
